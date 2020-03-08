@@ -1,0 +1,22 @@
+{
+  "name": "comp308lab1",
+  "version": "1.0.0",
+  "description": "Hang Li - 300993981 - COMP308 - Lab2",
+  "main": "server.js",
+  "author": "Hang Li",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.4.1",
+    "compression": "^1.7.4",
+    "connect-flash": "^0.1.1",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "method-override": "^3.0.0",
+    "mongoose": "4.6.5",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
+  }
+}
