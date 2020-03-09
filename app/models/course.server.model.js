@@ -2,10 +2,21 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const CourseSchema = new Schema({
-  courseCode: String,
-  courseName: String,
-  program: String,
-  semester: String,
+  courseCode: {
+    type: String,
+    required: "Course Code cannot be blank"
+  },
+  courseName: {
+    type: String,
+    required: "Course Name cannot be blank"
+  },
+  section: {
+    type: String,
+    required: "Course Section cannot be blank"
+  },
+  semester: {
+    type: String
+  },
   created: {
     type: Date,
     default: Date.now

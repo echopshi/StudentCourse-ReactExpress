@@ -1,4 +1,5 @@
 const Student = require("mongoose").model("Student");
+const Course = require("mongoose").model("Course");
 
 const getErrorMessage = function(err) {
   var message = "";
@@ -6,7 +7,7 @@ const getErrorMessage = function(err) {
     switch (err.code) {
       case 11000:
       case 11001:
-        message = "Usernmae already exists";
+        message = "student number already exists";
         break;
       default:
         message = "something went wrong";
@@ -21,68 +22,98 @@ const getErrorMessage = function(err) {
 
 exports.index = function(req, res) {
   res.render("index", {
-    heading: "Course Information",
-    messages: req.flash("error") || req.flash("info"),
-    userEmail: req.user ? req.user.email : ""
+    heading: "Express REST API"
   });
 };
 
-exports.renderSignup = function(req, res) {
-  return res.render("signup", {
-    title: "Sign Up page",
-    heading: "Sign Up as Student"
-  });
-};
-
-exports.signup = function(req, res) {
-  if (req.body.email) {
-    const student = new Student(req.body);
-    student.provider = "local";
-    student.save(err => {
-      if (err) {
-        const message = getErrorMessage(err);
-        req.flash("error", message); //save the error into flash memory.
-        return res.redirect("/signup");
-      } else {
-        return res.redirect("/");
-      }
-    });
-  } else {
-    return res.redirect("/signup");
-  }
-};
-
-exports.display = function(req, res, next) {
-  Student.find({}, (err, students) => {
+exports.create = function(req, res) {
+  const student = new Student(req.body);
+  student.provider = "local";
+  student.save(err => {
     if (err) {
+      const message = getErrorMessage(err);
+      req.flash("error", message); //save the error into flash memory.
       return next(err);
     } else {
-      res.render("students", {
-        title: "Students Page",
-        heading: "List All Students",
-        students: students
-      });
+      return res.json(student);
     }
   });
 };
 
-exports.userByID = function(req, res, next) {
+exports.welcome = function(req, res) {
+  if (!req.user) {
+    return res.send({ screen: "auth" }).end();
+  }
+  res.send(`Welcome student: ${req.user.firstName}!`);
+};
+
+exports.signout = function(req, res) {
+  req.logout();
+  req.session.destroy();
+  return res.status("200").json({ message: "signed out" });
+};
+
+exports.list = function(req, res, next) {
+  Student.find({}, (err, students) => {
+    if (err) {
+      return next(err);
+    } else {
+      res.json(students);
+    }
+  });
+};
+
+exports.read = function(req, res) {
+  res.json(req.student);
+};
+
+exports.update = function(req, res, next) {
+  User.findByIdAndUpdate(req.studentId, req.body, function(err, user) {
+    if (err) return next(err);
+    res.json(user);
+  });
+};
+
+exports.delete = function(req, res, next) {
+  User.findByIdAndRemove(req.studentId, req.body, function(err, user) {
+    if (err) return next(err);
+    res.json(user);
+  });
+};
+
+exports.studentByStudentNum = function(req, res, next, studentNum) {
   Student.findOne(
     {
-      email: req.session.email
+      studentNumber: studentNum
     },
     (err, student) => {
-      if (err) {
-        return next(err);
-      } else {
+      if (err) return next(err);
+      else {
+        req.student = student;
+        req.studentId = student._id;
         next();
       }
     }
   );
 };
 
-exports.logout = function(req, res) {
-  req.logout();
-  req.session.destroy();
-  res.redirect("/");
+exports.findCoursesByStudent = function(req, res, next) {
+  Course.find(
+    {
+      student: req.studentId
+    },
+    (err, courses) => {
+      if (err) return next(err);
+      else {
+        res.json(courses);
+      }
+    }
+  );
+};
+
+exports.requiresLogin = function(req, res, next) {
+  if (!req.user) {
+    return res.send({ screen: "auth" }).end();
+  }
+  next();
 };
