@@ -8,7 +8,7 @@ function View(props) {
 
   const deleteCookie = async () => {
     try {
-      await axios.get("/signout");
+      await axios.get("/api/signout");
       setScreen("auth");
     } catch (e) {
       console.log(e);

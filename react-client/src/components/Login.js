@@ -19,12 +19,10 @@ function App() {
   const auth = async () => {
     try {
       console.log("entering auth");
-      console.log(screen);
       //make a get request to /authenticate end-point on the server
       //call api
       let loginData = { username, password };
       const res = await axios.post(apiUrl, loginData);
-      console.log(res);
       //process the response
       if (res.data.screen !== undefined) {
         setScreen(res.data.screen);
