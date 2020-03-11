@@ -41,7 +41,7 @@ function List(props) {
               showDetail(item.studentNumber);
             }}
           >
-            {item.firstName}, {item.lastName}
+            {item.firstName}, {item.lastName}, {item.studentNumber}
           </ListGroup.Item>
         ))}
       </ListGroup>

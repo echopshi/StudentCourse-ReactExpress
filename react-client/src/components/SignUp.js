@@ -12,7 +12,7 @@ function CreateStudent(props) {
     firstName: "",
     lastName: "",
     email: "",
-    studentNumber: 0,
+    studentNumber: "",
     password: "",
     program: "",
     semester: ""
@@ -36,7 +36,7 @@ function CreateStudent(props) {
       .post(apiUrl, data)
       .then(result => {
         setShowLoading(false);
-        props.history.push("/show/" + result.data._id);
+        props.history.push("/show/" + result.data.studentNumber);
       })
       .catch(error => setShowLoading(false));
   };

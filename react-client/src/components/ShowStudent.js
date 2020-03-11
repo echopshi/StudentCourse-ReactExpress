@@ -31,20 +31,20 @@ function ShowStudent(props) {
   const deleteStudent = studentNumber => {
     setShowLoading(true);
     const student = {
-      firstName: student.firstName,
-      lastName: student.lastName,
-      email: student.email,
-      studentNumber: student.studentNumber,
-      password: student.password,
-      program: student.program,
-      semester: student.semester
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      studentNumber: data.studentNumber,
+      password: data.password,
+      program: data.program,
+      semester: data.semester
     };
 
     axios
       .delete(apiUrl, student)
       .then(result => {
         setShowLoading(false);
-        props.history.push("/list");
+        props.history.push("/studentList");
       })
       .catch(error => setShowLoading(false));
   };
@@ -62,7 +62,8 @@ function ShowStudent(props) {
         </h1>
         <p>Email: {data.email}</p>
         <p>Student Number: {data.studentNumber}</p>
-
+        <p>Program: {data.program}</p>
+        <p>Semester: {data.semester}</p>
         <p>
           <Button
             type="button"

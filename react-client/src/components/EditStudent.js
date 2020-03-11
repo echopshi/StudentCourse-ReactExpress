@@ -12,8 +12,10 @@ function EditStudent(props) {
     firstName: "",
     lastName: "",
     email: "",
-    username: "",
-    password: ""
+    studentNumber: "",
+    password: "",
+    program: "",
+    semester: ""
   });
   const [showLoading, setShowLoading] = useState(true);
   const apiUrl =
@@ -25,7 +27,6 @@ function EditStudent(props) {
     const fetchData = async () => {
       const result = await axios(apiUrl);
       setStudent(result.data);
-      console.log(result.data);
       setShowLoading(false);
     };
 
@@ -104,6 +105,7 @@ function EditStudent(props) {
           <Form.Group>
             <Form.Label>Student Number</Form.Label>
             <Form.Control
+              disabled={true}
               type="text"
               name="studentNumber"
               id="studentNumber"

@@ -39,8 +39,8 @@ function App() {
         <Route render={() => <Login />} path="/login" />
         <Route render={() => <SignUp />} path="/signUp" />
         <Route render={() => <StudentList />} path="/studentList" />
-        <Route render={() => <ShowStudent />} path="/show/:id" />
-        <Route render={() => <EditStudent />} path="/edit/:id" />
+        <Route render={() => <ShowStudent />} path="/show/:studentNumber" />
+        <Route render={() => <EditStudent />} path="/edit/:studentNumber" />
       </div>
     </Router>
   );

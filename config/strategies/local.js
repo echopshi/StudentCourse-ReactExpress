@@ -10,7 +10,7 @@ module.exports = function() {
     new LocalStrategy(function(username, password, done) {
       Student.findOne(
         {
-          email: username
+          studentNumber: username
         },
         (err, student) => {
           if (err) {
