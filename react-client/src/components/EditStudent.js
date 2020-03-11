@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Spinner from "react-bootstrap/Spinner";
-import Jumbotron from "react-bootstrap/Jumbotron";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import {
+  Spinner,
+  Jumbotron,
+  Form,
+  Button,
+  Container,
+  Col
+} from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 
 function EditStudent(props) {
@@ -60,90 +64,95 @@ function EditStudent(props) {
   };
 
   return (
-    <div>
+    <Container>
       {showLoading && (
         <Spinner animation="border" role="status">
           <span className="sr-only">Loading...</span>
         </Spinner>
       )}
       <Jumbotron>
+        <h2 className="text-center mb-3">Update Student Information</h2>
         <Form onSubmit={updateStudent}>
-          <Form.Group>
-            <Form.Label> First Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="firstName"
-              id="firstName"
-              placeholder="Enter first name"
-              value={student.firstName}
-              onChange={onChange}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label> Last Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="lastName"
-              id="lastName"
-              placeholder="Enter last name"
-              value={student.lastName}
-              onChange={onChange}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="text"
-              name="email"
-              id="email"
-              rows="3"
-              placeholder="Enter email"
-              value={student.email}
-              onChange={onChange}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Student Number</Form.Label>
-            <Form.Control
-              disabled={true}
-              type="text"
-              name="studentNumber"
-              id="studentNumber"
-              placeholder="Enter student number"
-              value={student.studentNumber}
-              onChange={onChange}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Program</Form.Label>
-            <Form.Control
-              type="text"
-              name="program"
-              id="program"
-              placeholder="Enter program"
-              value={student.program}
-              onChange={onChange}
-            />
-          </Form.Group>
-
-          <Form.Group>
-            <Form.Label>Semester</Form.Label>
-            <Form.Control
-              type="text"
-              name="semester"
-              id="semester"
-              placeholder="Enter semester"
-              value={student.semester}
-              onChange={onChange}
-            />
-          </Form.Group>
-
+          <Form.Row>
+            <Form.Group as={Col}>
+              <Form.Label> First Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="firstName"
+                id="firstName"
+                placeholder="Enter first name"
+                value={student.firstName}
+                onChange={onChange}
+              />
+            </Form.Group>
+            <Form.Group as={Col}>
+              <Form.Label> Last Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="lastName"
+                id="lastName"
+                placeholder="Enter last name"
+                value={student.lastName}
+                onChange={onChange}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col}>
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="text"
+                name="email"
+                id="email"
+                rows="3"
+                placeholder="Enter email"
+                value={student.email}
+                onChange={onChange}
+              />
+            </Form.Group>
+            <Form.Group as={Col}>
+              <Form.Label>Student Number</Form.Label>
+              <Form.Control
+                disabled={true}
+                type="text"
+                name="studentNumber"
+                id="studentNumber"
+                placeholder="Enter student number"
+                value={student.studentNumber}
+                onChange={onChange}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col}>
+              <Form.Label>Program</Form.Label>
+              <Form.Control
+                type="text"
+                name="program"
+                id="program"
+                placeholder="Enter program"
+                value={student.program}
+                onChange={onChange}
+              />
+            </Form.Group>
+            <Form.Group as={Col}>
+              <Form.Label>Semester</Form.Label>
+              <Form.Control
+                type="text"
+                name="semester"
+                id="semester"
+                placeholder="Enter semester"
+                value={student.semester}
+                onChange={onChange}
+              />
+            </Form.Group>
+          </Form.Row>
           <Button variant="primary" type="submit">
             Update
           </Button>
         </Form>
       </Jumbotron>
-    </div>
+    </Container>
   );
 }
 

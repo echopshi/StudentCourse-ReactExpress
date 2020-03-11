@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 //import ReactDOM from 'react-dom';
-import Jumbotron from "react-bootstrap/Jumbotron";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import { Jumbotron, Form, Button, Container } from "react-bootstrap";
 import axios from "axios";
 //
 import View from "./View";
@@ -57,17 +55,29 @@ function App() {
   return (
     <div className="App">
       {screen === "auth" ? (
-        <div>
-          <label>Student Number: </label>
-          <br />
-          <input type="text" onChange={e => setUsername(e.target.value)} />
-          <br />
-          <label>Password: </label>
-          <br />
-          <input type="password" onChange={e => setPassword(e.target.value)} />
-          <br />
-          <button onClick={auth}>Login</button>
-        </div>
+        <Container className="mt-5">
+          <Form className="form-signin">
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Student Number</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Enter student number"
+                onChange={e => setUsername(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                required
+                type="password"
+                placeholder="Password"
+                onChange={e => setPassword(e.target.value)}
+              />
+            </Form.Group>
+            <Button onClick={auth}>Login</Button>
+          </Form>
+        </Container>
       ) : (
         <View screen={screen} setScreen={setScreen} />
       )}

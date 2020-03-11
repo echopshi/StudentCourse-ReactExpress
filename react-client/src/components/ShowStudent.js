@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Spinner from "react-bootstrap/Spinner";
-import Jumbotron from "react-bootstrap/Jumbotron";
-import Button from "react-bootstrap/Button";
+import { Spinner, Jumbotron, Button, Container, Card } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 
 function ShowStudent(props) {
@@ -50,23 +48,24 @@ function ShowStudent(props) {
   };
 
   return (
-    <div>
+    <Container className="mt-5">
       {showLoading && (
         <Spinner animation="border" role="status">
           <span className="sr-only">Loading...</span>
         </Spinner>
       )}
-      <Jumbotron>
-        <h1>
+      <Card style={{ width: "18rem" }}>
+        <Card.Header as="h5">
           Name: {data.firstName}, {data.lastName}
-        </h1>
-        <p>Email: {data.email}</p>
-        <p>Student Number: {data.studentNumber}</p>
-        <p>Program: {data.program}</p>
-        <p>Semester: {data.semester}</p>
-        <p>
+        </Card.Header>
+        <Card.Body>
+          <Card.Title>Student Number: {data.studentNumber}</Card.Title>
+          <Card.Text>
+            <p>Email: {data.email}</p>
+            <p>Program: {data.program}</p>
+            <p>Semester: {data.semester}</p>
+          </Card.Text>
           <Button
-            type="button"
             variant="primary"
             onClick={() => {
               editStudent(data.studentNumber);
@@ -84,9 +83,9 @@ function ShowStudent(props) {
           >
             Delete
           </Button>
-        </p>
-      </Jumbotron>
-    </div>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }
 

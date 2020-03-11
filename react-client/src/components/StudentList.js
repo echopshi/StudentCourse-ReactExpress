@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ListGroup from "react-bootstrap/ListGroup";
-import Spinner from "react-bootstrap/Spinner";
+import { ListGroup, Container, Spinner } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 
 function List(props) {
@@ -26,7 +25,7 @@ function List(props) {
   };
 
   return (
-    <div>
+    <Container className="mt-5">
       {showLoading && (
         <Spinner animation="border" role="status">
           <span className="sr-only">Loading...</span>
@@ -41,11 +40,12 @@ function List(props) {
               showDetail(item.studentNumber);
             }}
           >
-            {item.firstName}, {item.lastName}, {item.studentNumber}
+            Student Name: {item.firstName}, {item.lastName} <br />
+            Student Number: {item.studentNumber}
           </ListGroup.Item>
         ))}
       </ListGroup>
-    </div>
+    </Container>
   );
 }
 
