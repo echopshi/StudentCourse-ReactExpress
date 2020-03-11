@@ -44,7 +44,7 @@ exports.welcome = function(req, res) {
   if (!req.user) {
     return res.send({ screen: "auth" }).end();
   }
-  res.send(`Welcome student: ${req.user.firstName}!`);
+  res.status(200).send({ screen: `Welcome student: ${req.user.firstName}!` });
 };
 
 exports.signout = function(req, res) {
@@ -68,14 +68,20 @@ exports.read = function(req, res) {
 };
 
 exports.update = function(req, res, next) {
-  User.findByIdAndUpdate(req.studentId, req.body, function(err, user) {
+  Student.findByIdAndUpdate({ _id: req.studentId }, req.body, function(
+    err,
+    user
+  ) {
     if (err) return next(err);
     res.json(user);
   });
 };
 
 exports.delete = function(req, res, next) {
-  User.findByIdAndRemove(req.studentId, req.body, function(err, user) {
+  Student.findByIdAndRemove({ _id: req.studentId }, req.body, function(
+    err,
+    user
+  ) {
     if (err) return next(err);
     res.json(user);
   });

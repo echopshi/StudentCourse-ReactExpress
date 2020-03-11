@@ -30,8 +30,8 @@ module.exports = function(app) {
   app
     .route("/api/students/:studentNumber")
     .get(student.read)
-    .put(student.requiresLogin, student.update)
-    .delete(student.requiresLogin, student.delete);
+    .put(student.update)
+    .delete(student.delete);
   app.param("studentNumber", student.studentByStudentNum);
 
   // list all the courses taken by a student

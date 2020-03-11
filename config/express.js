@@ -6,6 +6,8 @@ const compress = require("compression");
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 const flash = require("connect-flash");
 const passport = require("passport");
 
@@ -29,6 +31,15 @@ module.exports = function() {
   );
   app.use(bodyParser.json());
   app.use(methodOverride());
+  app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+  });
+  app.use(cors());
 
   //handle the use of PUT or DELETE methods
   //override with POST having ?_method=DELETE or

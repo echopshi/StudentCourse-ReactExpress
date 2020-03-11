@@ -10,7 +10,7 @@ const StudentSchema = new Schema({
     match: [/.+\@.+\..+/, "Please fill a valid email address"]
   },
   studentNumber: {
-    type: Number,
+    type: String,
     unique: true,
     required: "Username is required"
   },
