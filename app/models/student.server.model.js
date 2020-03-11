@@ -7,10 +7,12 @@ const StudentSchema = new Schema({
   lastName: String,
   email: {
     type: String,
-    index: true,
+    match: [/.+\@.+\..+/, "Please fill a valid email address"]
+  },
+  studentNumber: {
+    type: Number,
     unique: true,
-    required: true,
-    match: /.+\@.+\..+/
+    required: "Username is required"
   },
   password: {
     type: String,
@@ -57,28 +59,6 @@ StudentSchema.methods.hashPassword = function(password) {
   return crypto
     .pbkdf2Sync(password, this.salt, 1000, 64, "sha1")
     .toString("hex");
-};
-
-StudentSchema.statics.findUniqueEmail = function(username, suffix, callback) {
-  const possibleEmail = username + (suffix || "");
-  this.findOne(
-    {
-      email: possibleEmail
-    },
-    (err, user) => {
-      // If an error occurs call the callback with a null value, otherwise find find an available unique username
-      if (!err) {
-        // If an available unique username was found call the callback method, otherwise call the 'findUniqueUsername' method again with a new suffix
-        if (!user) {
-          callback(possibleEmail);
-        } else {
-          return this.findUniqueEmail(username, (suffix || 0) + 1, callback);
-        }
-      } else {
-        callback(null);
-      }
-    }
-  );
 };
 
 StudentSchema.methods.authenticate = function(password) {
