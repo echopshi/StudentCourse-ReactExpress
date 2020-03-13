@@ -1,10 +1,18 @@
 import React, { useState } from "react";
+import CreateCourse from "./CreateCourse";
 //
 import axios from "axios";
 //
 function View(props) {
-  const { screen, setScreen } = props;
-  const [data, setData] = useState();
+  const {
+    screen,
+    setScreen,
+    studentId,
+    setStudentId,
+    studentName,
+    setStudentName
+  } = props;
+  const [course, setCourse] = useState("");
 
   const deleteCookie = async () => {
     try {
@@ -14,25 +22,29 @@ function View(props) {
       console.log(e);
     }
   };
-  // called when user clicks on Get Data button
-  // end-point demonstrates another example for the use
-  // of cookie specific response from the server.
-  const getData = async () => {
-    try {
-      const res = await axios.get("/api/welcome");
-      console.log(res.data);
-      setData(res.data);
-    } catch (e) {
-      console.log(e);
-    }
+  //
+  const createCourse = () => {
+    setCourse("y");
   };
   //
   return (
-    <div>
-      <p>{screen}</p>
-      <p>{data}</p>
-      <button onClick={getData}>Get Data</button>
-      <button onClick={deleteCookie}>Log out</button>
+    <div className="App">
+      {course !== "y" ? (
+        <div className="mt-5">
+          <h2 className="mb-5">{screen}</h2>
+          <button onClick={createCourse}>Create Course</button>
+          <button onClick={deleteCookie}>Log out</button>
+        </div>
+      ) : (
+        <CreateCourse
+          screen={screen}
+          setScreen={setScreen}
+          studentId={studentId}
+          setStudentId={setStudentId}
+          studentName={studentName}
+          setStudentName={setStudentName}
+        />
+      )}
     </div>
   );
 }

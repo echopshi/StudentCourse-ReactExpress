@@ -17,6 +17,9 @@ module.exports = function(app) {
     })
   );
 
+  //
+  app.route("/api/read_cookie").get(student.isSignedIn);
+
   // after success sign in
   app.route("/api/welcome").get(student.welcome);
 
