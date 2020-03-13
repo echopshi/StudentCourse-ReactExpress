@@ -3,11 +3,11 @@ import axios from "axios";
 import { Spinner, Button, Container, Card } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 
-function ShowStudent(props) {
+function ShowCourse(props) {
   const [data, setData] = useState({});
   const [showLoading, setShowLoading] = useState(true);
   const apiUrl =
-    "http://localhost:3000/api/students/" + props.match.params.studentNumber;
+    "http://localhost:3000/api/courses/" + props.match.params.courseId;
 
   useEffect(() => {
     setShowLoading(false);
@@ -20,29 +20,26 @@ function ShowStudent(props) {
     fetchData();
   }, []);
 
-  const editStudent = studentNumber => {
+  const editCourse = id => {
     props.history.push({
-      pathname: "/edit/" + studentNumber
+      pathname: "/course/edit/" + id
     });
   };
 
-  const deleteStudent = studentNumber => {
+  const deleteCourse = id => {
     setShowLoading(true);
-    const student = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      studentNumber: data.studentNumber,
-      password: data.password,
-      program: data.program,
+    const course = {
+      courseCode: data.courseCode,
+      courseName: data.courseName,
+      section: data.section,
       semester: data.semester
     };
 
     axios
-      .delete(apiUrl, student)
+      .delete(apiUrl, course)
       .then(result => {
         setShowLoading(false);
-        props.history.push("/studentList");
+        props.history.push("/courseList");
       })
       .catch(error => setShowLoading(false));
   };
@@ -55,22 +52,18 @@ function ShowStudent(props) {
         </Spinner>
       )}
       <Card style={{ width: "18rem" }}>
-        <Card.Header as="h5">
-          Name: {data.firstName}, {data.lastName}
-        </Card.Header>
+        <Card.Header as="h5">Course Code: {data.courseCode}</Card.Header>
         <Card.Body>
-          <Card.Title>Student Number: {data.studentNumber}</Card.Title>
+          <Card.Title>Course Name: {data.courseName}</Card.Title>
           <Card.Text>
-            Email: {data.email}
-            <br />
-            Program: {data.program}
+            Section: {data.section}
             <br />
             Semester: {data.semester}
           </Card.Text>
           <Button
             variant="primary"
             onClick={() => {
-              editStudent(data.studentNumber);
+              editCourse(data._id);
             }}
           >
             Edit
@@ -80,7 +73,7 @@ function ShowStudent(props) {
             type="button"
             variant="danger"
             onClick={() => {
-              deleteStudent(data.studentNumber);
+              deleteCourse(data._id);
             }}
           >
             Delete
@@ -91,4 +84,4 @@ function ShowStudent(props) {
   );
 }
 
-export default withRouter(ShowStudent);
+export default withRouter(ShowCourse);

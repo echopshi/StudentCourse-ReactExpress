@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 //import ReactDOM from 'react-dom';
-import { Jumbotron, Form, Button, Container } from "react-bootstrap";
+import { Form, Button, Container } from "react-bootstrap";
 import axios from "axios";
 //
 import View from "./View";
@@ -8,6 +8,8 @@ import View from "./View";
 function App() {
   //state variable for the screen, admin or user
   const [screen, setScreen] = useState("auth");
+  const [studentId, setStudentId] = useState();
+  const [studentName, setStudentName] = useState("auth");
   //store input field data, user name and password
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
@@ -16,14 +18,14 @@ function App() {
   // for initial authentication
   const auth = async () => {
     try {
-      console.log("entering auth");
-      //make a get request to /authenticate end-point on the server
       //call api
       let loginData = { username, password };
       const res = await axios.post(apiUrl, loginData);
       //process the response
       if (res.data.screen !== undefined) {
         setScreen(res.data.screen);
+        setStudentId(res.data.studentId);
+        setStudentName(res.data.studentName);
         console.log(res.data.screen);
       }
     } catch (e) {
@@ -36,9 +38,11 @@ function App() {
   const readCookie = async () => {
     try {
       console.log("--- in readCookie function ---");
-      const res = await axios.get("/read_cookie");
+      const res = await axios.get("/api/read_cookie");
       if (res.data.screen !== undefined) {
         setScreen(res.data.screen);
+        setStudentId(res.data.studentId);
+        setStudentName(res.data.studentName);
         console.log(res.data.screen);
       }
     } catch (e) {
@@ -79,7 +83,14 @@ function App() {
           </Form>
         </Container>
       ) : (
-        <View screen={screen} setScreen={setScreen} />
+        <View
+          screen={screen}
+          setScreen={setScreen}
+          studentId={studentId}
+          setStudentId={setStudentId}
+          studentName={studentName}
+          setStudentName={setStudentName}
+        />
       )}
     </div>
   );

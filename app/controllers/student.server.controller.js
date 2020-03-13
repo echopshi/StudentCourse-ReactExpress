@@ -44,7 +44,11 @@ exports.welcome = function(req, res) {
   if (!req.user) {
     return res.send({ screen: "auth" }).end();
   }
-  res.status(200).send({ screen: `Welcome student: ${req.user.firstName}!` });
+  res.status(200).send({
+    screen: `Welcome student: ${req.user.firstName}!`,
+    studentName: `${req.user.firstName}`,
+    studentId: `${req.user._id}`
+  });
 };
 
 exports.signout = function(req, res) {
@@ -122,4 +126,11 @@ exports.requiresLogin = function(req, res, next) {
     return res.send({ screen: "auth" }).end();
   }
   next();
+};
+
+exports.isSignedIn = (req, res) => {
+  if (!req.user) {
+    return res.send({ screen: "auth" }).end();
+  }
+  return res.send({ screen: `Welcome student: ${req.user.firstName}!` }).end();
 };
