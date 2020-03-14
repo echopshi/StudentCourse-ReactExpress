@@ -36,7 +36,17 @@ exports.list = function(req, res) {
           message: getErrorMessage(err)
         });
       } else {
-        res.status(200).json(courses);
+        filteredCourses = [];
+        keys = [];
+        courses.forEach(course => {
+          var key = course.courseCode + course.section;
+          console.log(key);
+          if (!keys.includes(key)) {
+            keys.push(key);
+            filteredCourses.push(course);
+          }
+        });
+        return res.status(200).json(filteredCourses);
       }
     });
 };
