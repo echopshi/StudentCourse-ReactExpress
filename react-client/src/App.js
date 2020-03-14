@@ -10,10 +10,14 @@ import "./App.css";
 import ShowStudent from "./components/ShowStudent";
 import EditStudent from "./components/EditStudent";
 
-// student related components
+// course related components
 import ShowCourse from "./components/ShowCourse";
 import EditCourse from "./components/EditCourse";
 import CreateCourse from "./components/CreateCourse";
+
+// student and course interactive componenets
+import EnrolledStudents from "./components/EnrolledStudents";
+import EnrolledCourses from "./components/EnrolledCourses";
 
 // navigation components
 import Home from "./components/Home";
@@ -49,6 +53,15 @@ function App() {
         <Route render={() => <ShowCourse />} path="/course/show/:courseId" />
         <Route render={() => <EditCourse />} path="/course/edit/:courseId" />
         <Route render={() => <CreateCourse />} path="/course/create" />
+
+        <Route
+          render={() => <EnrolledCourses />}
+          path="/course/:courseId/students"
+        />
+        <Route
+          render={() => <EnrolledStudents />}
+          path="/student/:studentNumber/courses"
+        />
       </div>
       <p className="text-center mt-5">Hang Li, Frank Zhou, COMP308, Lab 3</p>
     </Router>

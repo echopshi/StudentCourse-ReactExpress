@@ -47,6 +47,12 @@ function ShowStudent(props) {
       .catch(error => setShowLoading(false));
   };
 
+  const findEnrolledCourses = studentNumber => {
+    props.history.push({
+      pathname: "/student/" + studentNumber + "/courses"
+    });
+  };
+
   return (
     <Container className="mt-5">
       {showLoading && (
@@ -84,6 +90,16 @@ function ShowStudent(props) {
             }}
           >
             Delete
+          </Button>
+          &nbsp;
+          <Button
+            type="button"
+            variant="primary"
+            onClick={() => {
+              findEnrolledCourses(data.studentNumber);
+            }}
+          >
+            Enrolled Courses
           </Button>
         </Card.Body>
       </Card>

@@ -1,4 +1,5 @@
 const Course = require("mongoose").model("Course");
+const Student = require("mongoose").model("Student");
 
 function getErrorMessage(err) {
   if (err.errors) {
@@ -28,7 +29,6 @@ exports.create = function(req, res) {
 exports.list = function(req, res) {
   Course.find()
     .sort("-created")
-    .populate("creator", "firstName lastName fullName")
     .exec((err, courses) => {
       if (err) {
         return res.status(400).send({
@@ -64,7 +64,7 @@ exports.update = function(req, res) {
 };
 
 exports.delete = function(req, res) {
-  Course.findByIdAndRemove({ _id: req.courseId }, req.body, function(
+  Course.findOneAndRemove({ _id: req.courseId }, req.body, function(
     err,
     course
   ) {
@@ -79,6 +79,7 @@ exports.courseByID = function(req, res, next, id) {
     if (!course) return next(new Error("Failed to load course " + id));
     req.course = course;
     req.courseId = course._id;
+    req.courseCode = course.courseCode;
     next();
   });
 };
@@ -88,17 +89,24 @@ exports.courseByID = function(req, res, next, id) {
 exports.findStudentByCourse = function(req, res, next) {
   Course.find(
     {
-      courseCode: req.course.courseCode
+      courseCode: req.courseCode
     },
     (err, courses) => {
       if (err) return next(err);
       req.courses = courses;
     }
   ).then(function() {
-    let studentList = [];
+    studentList = [];
+    index = 0;
+    length = req.courses.length;
     req.courses.forEach(course => {
-      studentList.add(course.student);
+      index++;
+      Student.find({ _id: course.student }, (err, student) => {
+        studentList.push(student[0]);
+        if (index == length && studentList.length == req.courses.length) {
+          return res.json(studentList);
+        }
+      });
     });
-    res.json(studentList);
   });
 };

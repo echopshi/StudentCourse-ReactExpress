@@ -41,6 +41,5 @@ module.exports = function(app) {
   app
     .route("/api/students/:studentNumber/courses")
     .get(student.findCoursesByStudent);
-  //not sure if we need this line or not
   app.param("studentNumber", student.studentByStudentNum);
 };
