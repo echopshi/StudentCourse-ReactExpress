@@ -111,7 +111,7 @@ function CreateStudent(props) {
             <Form.Group as={Col}>
               <Form.Label>Password</Form.Label>
               <Form.Control
-                type="text"
+                type="password"
                 name="password"
                 id="password"
                 placeholder="Enter password"

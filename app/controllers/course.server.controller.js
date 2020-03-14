@@ -28,7 +28,8 @@ exports.create = function(req, res) {
 
 exports.list = function(req, res) {
   Course.find()
-    .sort("-created")
+    .sort("-courseCode")
+    .sort("-section")
     .exec((err, courses) => {
       if (err) {
         return res.status(400).send({
