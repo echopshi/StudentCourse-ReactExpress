@@ -60,7 +60,7 @@ function ShowStudent(props) {
           <span className="sr-only">Loading...</span>
         </Spinner>
       )}
-      <Card style={{ width: "18rem" }}>
+      <Card>
         <Card.Header as="h5">
           Name: {data.firstName}, {data.lastName}
         </Card.Header>

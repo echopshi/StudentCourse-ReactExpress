@@ -57,7 +57,7 @@ function ShowCourse(props) {
           <span className="sr-only">Loading...</span>
         </Spinner>
       )}
-      <Card style={{ width: "18rem" }}>
+      <Card>
         <Card.Header as="h5">Course Code: {data.courseCode}</Card.Header>
         <Card.Body>
           <Card.Title>Course Name: {data.courseName}</Card.Title>
