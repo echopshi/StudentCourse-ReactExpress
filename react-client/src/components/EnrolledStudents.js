@@ -21,9 +21,9 @@ function List(props) {
     fetchData();
   }, []);
 
-  const showDetail = studentNumber => {
+  const showDetail = id => {
     props.history.push({
-      pathname: "/show/" + studentNumber
+      pathname: "/course/show/" + id
     });
   };
 
@@ -40,7 +40,7 @@ function List(props) {
             key={idx}
             action
             onClick={() => {
-              showDetail(item.studentNumber);
+              showDetail(item._id);
             }}
           >
             <Table striped bordered hover>
